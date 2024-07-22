@@ -7,8 +7,10 @@ const app = express();
 
 //router 
 const categoriesRouter = require('./app/api/v1/categories/router');
-
 const v1 = "/api/v1/cms";
+const notFoundMiddleware = require('./app/middleware/not-found');
+const handleErrorMiddleware = require('./app/middleware/handler-error');
+
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -23,6 +25,7 @@ app.get('/', (req, res)=>{
 });
 
 app.use(v1, categoriesRouter);
-//app.use('/users', usersRouter);
+app.use(notFoundMiddleware);
+app.use(handleErrorMiddleware);
 
 module.exports = app;

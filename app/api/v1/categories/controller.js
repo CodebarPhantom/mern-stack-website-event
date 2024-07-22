@@ -1,93 +1,78 @@
-const Categories = require("./model");
-
-const create = async (req, res, next) => {
-  try {
-    const { name } = req.body;
-    const result = await Categories.create({ name });
-
-    res.status(201).json({
-      data: result,
-    });
-  } catch (error) {
-    next(error);
-  }
-};
-
-const index = async (req, res, next) => {
-  try {
-    const result = await Categories.find().select("_id name");
-    res.status(200).json({
-      data: result,
-    });
-  } catch (error) {
-    next(error);
-  }
-};
-
-const find = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const result = await Categories.findOne({ _id: id });
-
-    res.status(200).json({
-      data: result,
-    });
-  } catch (error) {
-    next(error);
-  }
-};
-
-const update = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const { name } = req.body;
-
-    // const checkCategory = await Categories.findById(id);
-    // checkCategory.name = name;
-    // await checkCategory.save();
-
-    // const result = await Categories.findOne({_id:id});
-    // result.name = name;
-    // result.save();
-
-    // res.status(200).json({
-    //     data:result
-    // })
-
-    const result = await Categories.findByIdAndUpdate(
-      { _id: id },
-      { name },
-      { new: true, runValidators: true }
-    );
-    res.status(200).json({
-      data: result,
-    });
-
-    // res.status(200).json({
-    //     data: checkCategory
-    // });
-  } catch (error) {
-    next(error);
-  }
-};
-
-const destroy = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const result = await Categories.findByIdAndDelete(id);
-
-    res.status(200).json({
-      data: result,
-    });
-  } catch (error) {
-    next(error);
-  }
-};
-
-module.exports = {
-  index,
-  create,
-  find,
-  update,
-  destroy
-};
+// import services categories
+const {
+    getAllCategories,
+    getOneCategories,
+    updateCategories,
+    createCategories,
+    deleteCategories,
+  } = require('../../../service/mongoose/categories');
+  
+  const { StatusCodes } = require('http-status-codes');
+  
+  const create = async (req, res, next) => {
+    try {
+      const result = await createCategories(req);
+  
+      res.status(StatusCodes.CREATED).json({
+        data: result,
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
+  
+  const index = async (req, res, next) => {
+    try {
+      const result = await getAllCategories(req);
+  
+      res.status(StatusCodes.OK).json({
+        data: result,
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
+  
+  const find = async (req, res, next) => {
+    try {
+      const result = await getOneCategories(req);
+  
+      res.status(StatusCodes.OK).json({
+        data: result,
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
+  
+  const update = async (req, res, next) => {
+    try {
+      const result = await updateCategories(req);
+  
+      res.status(StatusCodes.OK).json({
+        data: result,
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
+  
+  const destroy = async (req, res, next) => {
+    try {
+      const result = await deleteCategories(req);
+  
+      res.status(StatusCodes.OK).json({
+        data: result,
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
+  
+  module.exports = {
+    index,
+    find,
+    update,
+    destroy,
+    create,
+  };
