@@ -5,6 +5,6 @@ dotenv.config();
 //const urlDb = process.env.URL_MONGODB_DEV;
 module.exports = {
     urlDb : process.env.URL_MONGODB_DEV,
-    jwtExpiration : '10m',
+    jwtExpiration : '24h',
     jwtSecret: 'jwtSecret'
 }
