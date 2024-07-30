@@ -1,35 +1,34 @@
-const express = require("express");
+const express = require('express');
 const router = express();
-const { create, index, find, update, destroy } = require("./controller");
+const { create, index, find, update, destroy } = require('./controller');
 const {
   authenticateUser,
   authorizeRoles,
-} = require("../../../middleware/auth");
+} = require('../../../middlewares/auth');
 
-//app.use(authenticateUser);
-router.get("/categories", authenticateUser, authorizeRoles("organizer"), index);
+router.get('/categories', authenticateUser, authorizeRoles('organizer'), index);
 router.get(
-  "/categories/:id",
+  '/categories/:id',
   authenticateUser,
-  authorizeRoles("organizer"),
+  authorizeRoles('organizer'),
   find
 );
 router.put(
-  "/categories/:id",
+  '/categories/:id',
   authenticateUser,
-  authorizeRoles("organizer"),
+  authorizeRoles('organizer'),
   update
 );
 router.delete(
-  "/categories/:id",
+  '/categories/:id',
   authenticateUser,
-  authorizeRoles("organizer"),
+  authorizeRoles('organizer'),
   destroy
 );
 router.post(
-  "/categories",
+  '/categories',
   authenticateUser,
-  authorizeRoles("organizer"),
+  authorizeRoles('organizer'),
   create
 );
 

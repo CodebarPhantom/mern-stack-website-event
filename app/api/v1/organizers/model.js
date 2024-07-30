@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 const { model, Schema } = mongoose;
 
-let organizersSchema = new Schema(
+let organizersSchema = Schema(
   {
     organizer: {
       type: String,
-      required: [true, 'Penyelenggara harus diisi'],
+      required: [true, 'Peyelenggara harus diisi'],
     },
   },
   { timestamps: true }
